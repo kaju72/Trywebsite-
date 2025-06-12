@@ -1,0 +1,12 @@
+[
+  {
+    "id": "app1",
+    "title": "Awesome App 1",
+    "image": "images/app1.jpg"
+  },
+  {
+    "id": "app2",
+    "title": "Cool App 2",
+    "image": "images/app2.jpg"
+  }
+]

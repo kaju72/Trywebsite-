@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>App Detail</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<header>
+  <h1>📥 App Detail</h1>
+</header>
+
+<div class="card">
+  <img id="postImage" src="" alt="App Image" />
+  <h2 id="postTitle">App Title</h2>
+  <p>This is one of the top apps. Please follow the steps to download.</p>
+  <a id="downloadBtn" class="button" href="#">Start Download</a>
+</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+
+  const posts = {
+    "app1": {
+      title: "Awesome App 1",
+      image: "images/app1.jpg"
+    },
+    "app2": {
+      title: "Cool App 2",
+      image: "images/app2.jpg"
+    }
+  };
+
+  if (posts[id]) {
+    document.getElementById("postTitle").innerText = posts[id].title;
+    document.getElementById("postImage").src = posts[id].image;
+    document.getElementById("downloadBtn").href = `page1.html?id=${id}`;
+  } else {
+    document.querySelector(".card").innerHTML = "<p>Post not found!</p>";
+  }
+</script>
+
+<footer>
+  &copy; 2025 DigitalWorld
+</footer>
+</body>
+</html>

@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Redirecting...</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<header>
+  <h1>Redirecting to Download...</h1>
+</header>
+
+<div class="card">
+  <p>Please wait while we redirect you to your download.</p>
+</div>
+
+<script>
+  const id = new URLSearchParams(window.location.search).get('id');
+  const links = {
+    "app1": "https://example.com/download/app1.apk",
+    "app2": "https://example.com/download/app2.apk"
+  };
+
+  if (links[id]) {
+    setTimeout(() => {
+      window.location.href = links[id];
+    }, 3000);
+  } else {
+    document.querySelector(".card").innerHTML = "<p>Invalid link!</p>";
+  }
+</script>
+
+<footer>
+  &copy; 2025 DigitalWorld
+</footer>
+</body>
+</html>
