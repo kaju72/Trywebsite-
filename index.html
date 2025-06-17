@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>URL Shortener</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; }
+        input, button { padding: 10px; margin: 5px 0; width: 100%; box-sizing: border-box; }
+        #result { margin-top: 20px; padding: 15px; background: #f0f8ff; border-radius: 5px; }
+        .instructions { background: #fffaf0; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+        textarea { width: 100%; font-family: monospace; min-height: 200px; }
+    </style>
+</head>
+<body>
+    <h1>Custom URL Shortener</h1>
+    
+    <div class="instructions">
+        <h3>How to use:</h3>
+        <ol>
+            <li>Enter your long URL below</li>
+            <li>Click "Create Short URL"</li>
+            <li>Create a new file with the shown content</li>
+        </ol>
+    </div>
+    
+    <input type="url" id="longUrl" placeholder="https://example.com">
+    <button onclick="shortenUrl()">Create Short URL</button>
+    
+    <div id="result" style="display: none;">
+        <h3>Your short URL is ready!</h3>
+        <p>1. Create a new file in your repository at: <code id="filePath"></code></p>
+        <p>2. Copy this content into that file:</p>
+        <textarea id="fileContent" readonly></textarea>
+        <p>3. Your short URL will be: <a id="shortUrl" target="_blank"></a></p>
+    </div>
+
+    <script>
+        function shortenUrl() {
+            const longUrl = document.getElementById('longUrl').value.trim();
+            
+            if (!longUrl) {
+                alert('Please enter a URL');
+                return;
+            }
+
+            const shortCode = Math.random().toString(36).substring(2, 8);
+            const baseUrl = window.location.origin;
+            
+            const redirectContent = `<!DOCTYPE html>
+<html>
+<head>
+    <title>Redirecting...</title>
+    <script>
+        const pages = [
+            "${baseUrl}/pages/page1.html?target=${encodeURIComponent(longUrl)}",
+            "${baseUrl}/pages/page2.html?target=${encodeURIComponent(longUrl)}",
+            "${baseUrl}/pages/page3.html?target=${encodeURIComponent(longUrl)}",
+            "${longUrl.startsWith('http') ? longUrl : 'https://' + longUrl}"
+        ];
+        
+        let currentPage = 0;
+        function redirect() {
+            if (currentPage < pages.length) {
+                window.location.href = pages[currentPage++];
+            }
+        }
+        redirect();
+    </script>
+</head>
+<body>
+    <p>Loading...</p>
+</body>
+</html>`;
+
+            document.getElementById('filePath').textContent = `s/${shortCode}.html`;
+            document.getElementById('fileContent').value = redirectContent;
+            document.getElementById('shortUrl').href = `${baseUrl}/s/${shortCode}`;
+            document.getElementById('shortUrl').textContent = `${baseUrl}/s/${shortCode}`;
+            document.getElementById('result').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
